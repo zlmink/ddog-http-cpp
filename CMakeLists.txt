@@ -10,9 +10,15 @@ set(LDFLAGS,-L/usr/local/opt/openssl/lib)
 set(CPPFLAGS,-I/usr/local/opt/openssl/include)
 include(CPack)
 
-FIND_PACKAGE( Boost 1.74)
-if (Boost_FOUND)
-    INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+set(CURL_LIBRARY "-lcurl")
+find_package(CURL REQUIRED)
+
+include_directories(${CURL_INCLUDE_DIR})
+
+
+#FIND_PACKAGE( Boost 1.74)
+#if (Boost_FOUND)
+#    INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
     #-------------------------------------------------------------------------------
     #
@@ -41,9 +47,9 @@ if (Boost_FOUND)
     #
     #-------------------------------------------------------------------------------
 
-    include_directories(${Boost_INCLUDE_DIRS})
+    #include_directories(${Boost_INCLUDE_DIRS})
     add_executable(${PROJECT_NAME} main.cpp)
-    target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} OpenSSL::SSL)
+    target_link_libraries(${PROJECT_NAME} OpenSSL::SSL ${CURL_LIBRARIES})
     install(TARGETS ddog-cpp DESTINATION bin)
-endif()
+#endif()
 

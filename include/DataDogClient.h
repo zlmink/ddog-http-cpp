@@ -1,0 +1,6 @@
+class DataDogClient {
+    public:
+        DataDogClient(){
+            
+        }
+}
