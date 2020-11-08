@@ -15,6 +15,8 @@
 #include <chrono>
 #include <sstream>
 
+#include "include/DataDogMetric.h"
+
 #define NUMT 4
 
 // namespace beast = boost::beast;         // from <boost/beast.hpp>
@@ -261,6 +263,8 @@ CURL * metricCurl(const char* ddApiKey,const char *jsonString)
 	curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, (unsigned)strlen(jsonString));
 	curl_easy_setopt(curl, CURLOPT_COPYPOSTFIELDS, jsonString);
 
+    std::cout << "Sending data" << jsonString << std::endl;
+
 	return curl;
 }
 
@@ -316,11 +320,22 @@ int main(int argc, char** argv)
     // //boost::certify::enable_native_https_server_verification(ctx);
 
     std::ostringstream bodyTest;
+    DataDogPoint point (timeSinceEpochSec(),"5.465");
+    std::vector<DataDogPoint> points;
+    points.push_back(point);
+    DataDogMetric metric ("myhost","cppTest",points);
+    std::vector<DataDogMetric> metrics;
+    metrics.push_back(metric);
+    DataDogMetricSeries series (metrics);
     bodyTest << "{\"series\":[{\"host\":\"myhost\",\"metric\":\"cppTest\",\"points\":[[\"" << nowStr << "\",\"5.465\"]]}]}";
-    std::cout << bodyTest.str() << std::endl;
+    //std::cout << bodyTest.str() << std::endl;
     // Launch the asynchronous operation
-    std::string content = bodyTest.str();
-    const char *cstr = content.c_str();
+    //std::string content = bodyTest.str();
+    //metric.getJsonStr("myhost");
+    //eturn EXIT_USCCE
+    //const char *cstr = bodyTest.str().c_str();
+    const std::string json = series.getJsonStr();
+    const char *cstr = json.c_str();
     // std::make_shared<session>(net::make_strand(ioc),ctx)->run(cstr, ddApiKey);
 
 

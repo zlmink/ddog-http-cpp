@@ -46,10 +46,11 @@ include_directories(${CURL_INCLUDE_DIR})
 
     #
     #-------------------------------------------------------------------------------
+    find_package(RapidJSON)
 
     #include_directories(${Boost_INCLUDE_DIRS})
-    add_executable(${PROJECT_NAME} main.cpp)
-    target_link_libraries(${PROJECT_NAME} OpenSSL::SSL ${CURL_LIBRARIES})
+    add_executable(${PROJECT_NAME} main.cpp DataDogMetric.cpp)
+    target_link_libraries(${PROJECT_NAME} OpenSSL::SSL ${CURL_LIBRARIES} ${RapidJSON_LIBRARIES})
     install(TARGETS ddog-cpp DESTINATION bin)
 #endif()
 
