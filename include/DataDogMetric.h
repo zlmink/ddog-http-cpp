@@ -22,9 +22,12 @@ class DataDogPoint {
 class DataDogMetric {
     public:
         DataDogMetric (std::string host, std::string name, std::vector<DataDogPoint> );
+        DataDogMetric (std::string host, std::string name, std::vector<DataDogPoint>, std::string tags,std::string type);
         std::string getJsonStr(std::string host);
         Document getJsonDocument();
     private:
+        std::string tags = "";
+        std::string type = "";
         std::string host;
         std::string name;
         std::vector<DataDogPoint> points;

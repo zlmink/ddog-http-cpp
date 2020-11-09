@@ -14,6 +14,14 @@ DataDogMetric::DataDogMetric(std::string host, std::string name, std::vector<Dat
     this->host = host;
 }
 
+DataDogMetric::DataDogMetric(std::string host, std::string name, std::vector<DataDogPoint> points,std::string tags = "",std::string type = ""){
+    this->name = name;
+    this->points = points;
+    this->host = host;
+    this->type = type;
+    this->tags = tags;
+}
+
 Document DataDogMetric::getJsonDocument(){
     Document d;
     d.SetObject();
@@ -41,6 +49,18 @@ Document DataDogMetric::getJsonDocument(){
         array.PushBack(pArr,alloc);
         //std::cout << this->points[i].epoch << std::endl;
         
+    }
+
+    if (!this->tags.empty()){
+        Value t;
+        t.SetString(this->tags.c_str(),this->tags.length(),alloc);
+        d.AddMember("tags",t,alloc);
+    }
+
+    if (!this->type.empty()){
+        Value typ;
+        typ.SetString(this->type.c_str(),this->type.length(),alloc);
+        d.AddMember("type",typ,alloc);
     }
 
     d.AddMember("points",array,alloc);
