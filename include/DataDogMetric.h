@@ -1,12 +1,13 @@
+#pragma once
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 #include <vector>
 #include <map>
 #include <string>
+#include <sstream>
 
 using namespace rapidjson;
-
 
 class DataDogPoint {
     public:

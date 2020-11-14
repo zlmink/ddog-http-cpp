@@ -1,6 +1,0 @@
-class DataDogClient {
-    public:
-        DataDogClient(){
-            
-        }
-}

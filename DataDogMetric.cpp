@@ -1,12 +1,12 @@
 #include "include/DataDogMetric.h"
-#include "include/rapidjson/document.h"
-#include "include/rapidjson/writer.h"
-#include "include/rapidjson/stringbuffer.h"
-#include <string>
-#include <iostream>
-#include <sstream>
+// #include "include/rapidjson/document.h"
+// #include "include/rapidjson/writer.h"
+// #include "include/rapidjson/stringbuffer.h"
+// #include <string>
+// #include <iostream>
+// #include <sstream>
 
-using namespace rapidjson;
+// using namespace rapidjson;
 
 DataDogMetric::DataDogMetric(std::string host, std::string name, std::vector<DataDogPoint> points){
     this->name = name;
