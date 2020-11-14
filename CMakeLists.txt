@@ -83,7 +83,7 @@ include_directories(${CURL_INCLUDE_DIRS})
     find_package(RapidJSON)
 
     #include_directories(${Boost_INCLUDE_DIRS})
-    add_executable(${PROJECT_NAME} main.cpp DataDogMetric.cpp DataDogClient.cpp DataDogMonitor.cpp)
+    add_executable(${PROJECT_NAME} main.cpp DataDogMetric.cpp DataDogClient.cpp DataDogMonitor.cpp DataDogEvent.cpp)
     target_link_libraries(${PROJECT_NAME} ${RapidJSON_LIBRARIES} OpenSSL::SSL ${CURL_LIBRARY} cpr::cpr )
     install(TARGETS ddog-cpp DESTINATION bin)
 #endif()

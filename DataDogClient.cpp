@@ -7,6 +7,8 @@
 // //#include <cpr/ssl_options.h>
 // #include "DataDogMetric.h"
 #include "include/DataDogMonitor.hpp"
+#include "include/DataDogEvent.hpp"
+#include <cstdint>
 // #include <iostream>
 // #include <sstream>
 // #include "rapidjson/document.h"
@@ -90,6 +92,50 @@ void DataDogClient::getMonitors(void(*cb)(bool,std::vector<DataDogMonitor>,cpr::
         cpr::Header{{"DD-APPLICATION-KEY",this->appKey},{"Content-Type","application/json"},{"DD-API-KEY",this->apiKey}},cpr::VerifySsl(0));
         
 }
+
+void DataDogClient::getEvents(uint64_t start_date, uint64_t end_date, void(*cb)(bool,std::vector<DataDogEvent>,cpr::Response)){
+    char uri[100] = "/api/v1/events";
+    
+    std::ostringstream dd_url_stream;
+    dd_url_stream << "https://api.datadoghq.com" << uri;
+    std::string dd_url = dd_url_stream.str();
+
+    auto parseResponse = [&cb](cpr::Response r){
+        //std::cout << r.text << std::endl;
+        std::vector<DataDogEvent> Events;
+        if (r.status_code == 200){
+            Document doc;
+            doc.Parse(r.text.c_str());
+            Value& eventsValue = doc["events"];
+            assert(eventsValue.IsArray());
+            
+            for (SizeType i=0;i<eventsValue.Size();i++){
+                Value& eventVal = eventsValue[i];
+                assert(eventVal.IsObject());
+                DataDogEvent Event(eventVal);
+                Events.push_back(Event);
+            } 
+            StringBuffer buffer;
+            Writer<StringBuffer> writer(buffer);
+            doc.Accept(writer);
+            std::cout << buffer.GetString() << std::endl;
+            cb(true,Events,r);
+        }else{
+            cb(false,Events,r);
+        }
+    };
+
+    std::string start = std::to_string(start_date);
+    std::string end = std::to_string(end_date);
+    cpr::Parameters params = cpr::Parameters{{"start",start.c_str()},{"end",end.c_str()}};
+
+    auto future_response = cpr::GetCallback(parseResponse,cpr::Url{dd_url},
+        cpr::Header{{"DD-APPLICATION-KEY",this->appKey},{"Content-Type","application/json"},{"DD-API-KEY",this->apiKey}},
+        params,
+        cpr::VerifySsl(0));
+       
+};
+
 
 void DataDogClient::checkApiKey(){
     char uri[100] = "/api/v1/validate";

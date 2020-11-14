@@ -90,11 +90,17 @@ int main(int argc, char** argv)
     DataDogMetricSeries series (metrics);
 
     DataDogClient client(ddApiKey,ddAppKey);
-    auto printRes = [](bool success, std::vector<DataDogMonitor> Monitors,cpr::Response r){
+    auto printMonitors = [](bool success, std::vector<DataDogMonitor> Monitors,cpr::Response r){
+        std::cout << r.text << std::endl;
+    };
+    auto printEvents = [](bool success, std::vector<DataDogEvent> Events,cpr::Response r){
         std::cout << r.text << std::endl;
     };
     //client.sendMetricSeries(series,printRes);
-    client.getMonitors(printRes);
+    //client.getMonitors(printRes);
+    uint64_t now = timeSinceEpochSec();
+    uint64_t before = timeSinceEpochSec() - (60 * 60 * 48);
+    client.getEvents(before,now,printEvents);
     //client.checkApiKey();
     //system("pause");
 
