@@ -1,12 +1,4 @@
-// #include <boost/beast/core.hpp>
-// #include <boost/beast/http.hpp>
-// #include <boost/beast/version.hpp>
-// #include <boost/asio/strand.hpp>
-// #include <boost/lexical_cast.hpp>
-// #include <boost/beast/ssl.hpp>
 #include <curl/curl.h>
-//#include <boost/certify/extensions.hpp>
-//#include <boost/certify/https_verification.hpp>
 #include <cstdlib>
 #include <functional>
 #include <iostream>
@@ -18,14 +10,6 @@
 
 // #include "include/DataDogMetric.h"
 #include "include/DataDogClient.hpp"
-
-#define NUMT 4
-
-// namespace beast = boost::beast;         // from <boost/beast.hpp>
-// namespace http = beast::http;           // from <boost/beast/http.hpp>
-// namespace net = boost::asio;            // from <boost/asio.hpp>
-// namespace ssl = boost::asio::ssl;       // from <boost/asio/ssl.hpp>
-// using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 //------------------------------------------------------------------------------
 uint64_t timeSinceEpochSec() {
@@ -97,7 +81,7 @@ int main(int argc, char** argv)
         std::cout << r.text << std::endl;
     };
     //client.sendMetricSeries(series,printRes);
-    //client.getMonitors(printRes);
+    client.getMonitors(printMonitors);
     uint64_t now = timeSinceEpochSec();
     uint64_t before = timeSinceEpochSec() - (60 * 60 * 48);
     client.getEvents(before,now,printEvents);

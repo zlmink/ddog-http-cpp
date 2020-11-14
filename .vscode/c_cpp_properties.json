@@ -2,7 +2,7 @@
     "configurations": [
       {
         "name": "Mac",
-        "includePath": ["${workspaceFolder}/**","/usr/local/include/**","usr/local/Cellar/rapidjson/**","${vcpkgRoot}/x64-osx/include"],
+        "includePath": ["${workspaceFolder}/**","~/.conan/data/**"],
         "defines": [],
         "compilerPath": "/usr/bin/clang",
         "cStandard": "c11",

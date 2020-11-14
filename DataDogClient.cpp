@@ -50,7 +50,7 @@ void DataDogClient::sendMetricSeries(DataDogMetricSeries series,void(*cb)(bool,c
         cpr::Header{{"Accept","application/json"}},
         cpr::Header{{"Content-Type","application/json"}},
         cpr::Header{{"charset","utf-8"}},
-        cpr::Body{data},cpr::VerifySsl(0));
+        cpr::Body{data});
 
     // if (future_response.wait_for(std::chrono::seconds(10)) == std::future_status::ready) {
     //     std::cout << future_response.get() << std::endl;
@@ -89,7 +89,7 @@ void DataDogClient::getMonitors(void(*cb)(bool,std::vector<DataDogMonitor>,cpr::
     };
 
     auto future_response = cpr::GetCallback(parseResponse,cpr::Url{dd_url},
-        cpr::Header{{"DD-APPLICATION-KEY",this->appKey},{"Content-Type","application/json"},{"DD-API-KEY",this->apiKey}},cpr::VerifySsl(0));
+        cpr::Header{{"DD-APPLICATION-KEY",this->appKey},{"Content-Type","application/json"},{"DD-API-KEY",this->apiKey}});
         
 }
 
@@ -131,8 +131,7 @@ void DataDogClient::getEvents(uint64_t start_date, uint64_t end_date, void(*cb)(
 
     auto future_response = cpr::GetCallback(parseResponse,cpr::Url{dd_url},
         cpr::Header{{"DD-APPLICATION-KEY",this->appKey},{"Content-Type","application/json"},{"DD-API-KEY",this->apiKey}},
-        params,
-        cpr::VerifySsl(0));
+        params);
        
 };
 
@@ -154,5 +153,5 @@ void DataDogClient::checkApiKey(){
     };
 
     auto future_response = cpr::GetCallback(parseResponse,cpr::Url{dd_url},
-        cpr::Header{{"DD-API-KEY",this->apiKey}},cpr::VerifySsl(0));
+        cpr::Header{{"DD-API-KEY",this->apiKey}});
 };
