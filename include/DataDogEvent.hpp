@@ -21,7 +21,7 @@ class DataDogEvent {
         DataDogEvent(Value& jsonData);
         uint64_t date_happened;
         std::string alert_type;
-        bool is_aggregate;
+        bool is_aggregate;          //event has children or not
         std::string title;
         std::string url;
         std::string text;

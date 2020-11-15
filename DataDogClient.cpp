@@ -1,19 +1,8 @@
 #include "include/DataDogClient.hpp"
-// #include <stdio.h>
-// #include <stdlib.h>
-// //#include <uv.h>
-// //#include <curl/curl.h>
-// #include <cpr/cpr.h>
-// //#include <cpr/ssl_options.h>
-// #include "DataDogMetric.h"
 #include "include/DataDogMonitor.hpp"
 #include "include/DataDogEvent.hpp"
 #include <cstdint>
-// #include <iostream>
-// #include <sstream>
-// #include "rapidjson/document.h"
-// #include "rapidjson/writer.h"
-// #include "rapidjson/stringbuffer.h"
+
 
 using namespace rapidjson;
 
@@ -40,21 +29,13 @@ void DataDogClient::sendMetricSeries(DataDogMetricSeries series,void(*cb)(bool,c
         cb(false,r);
         }
     };
-    // cpr::SslOptions sslOpts = cpr::Ssl(
-    // cpr::ssl::TLSv1{}, cpr::ssl::ALPN{false}, cpr::ssl::NPN{false}, cpr::ssl::CaPath{baseDirPath + "ca.cer"},
-    // cpr::ssl::CertFile{baseDirPath + "/client.cer"}, cpr::ssl::KeyFile{baseDirPath + "client.key"},
-    // cpr::ssl::VerifyPeer{false}, cpr::ssl::VerifyHost{false}, cpr::ssl::VerifyStatus{false});
-    cpr::SslOptions sslOpts = cpr::Ssl(cpr::ssl::VerifyHost{true},cpr::ssl::VerifyPeer{true},cpr::ssl::ALPN{false}, cpr::ssl::NPN{false});
-    //cpr::SslOptions sslOpts = cpr::Ssl();  
+    
     auto future_response = cpr::PostCallback(parseResponse,cpr::Url{dd_url},
         cpr::Header{{"Accept","application/json"}},
         cpr::Header{{"Content-Type","application/json"}},
         cpr::Header{{"charset","utf-8"}},
         cpr::Body{data});
 
-    // if (future_response.wait_for(std::chrono::seconds(10)) == std::future_status::ready) {
-    //     std::cout << future_response.get() << std::endl;
-    // }
 }
 
 void DataDogClient::getMonitors(void(*cb)(bool,std::vector<DataDogMonitor>,cpr::Response)){

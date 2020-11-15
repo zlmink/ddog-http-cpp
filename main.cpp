@@ -78,7 +78,10 @@ int main(int argc, char** argv)
         std::cout << r.text << std::endl;
     };
     auto printEvents = [](bool success, std::vector<DataDogEvent> Events,cpr::Response r){
-        std::cout << r.text << std::endl;
+        //std::cout << r.text << std::endl;
+        if (Events.size() > 0){
+            std::cout << Events[0].title << std::endl;
+        }
     };
     //client.sendMetricSeries(series,printRes);
     client.getMonitors(printMonitors);
