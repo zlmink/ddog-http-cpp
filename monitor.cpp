@@ -1,14 +1,14 @@
-#include "include/DataDogMonitor.hpp"
+#include "include/monitor.hpp"
 // #include "rapidjson/document.h"
 // #include "rapidjson/writer.h"
 // #include "rapidjson/stringbuffer.h"
-// #include "DataDogClient.hpp"
+// #include "client.hpp"
 // #include <vector>
 // #include <map>
 // #include <string>
 using namespace rapidjson;
 
-DataDogMonitor::DataDogMonitor(Value& monitorJson){
+monitor::monitor(Value& monitorJson){
     
     this->status = monitorJson["status"].GetString();
     Value& scopes = monitorJson["scopes"];

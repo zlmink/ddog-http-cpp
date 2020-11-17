@@ -6,8 +6,8 @@
 #include <cpr/cpr.h>
 #include <cstdint>
 //#include <cpr/ssl_options.h>
-#include "DataDogMonitor.hpp"
-#include "DataDogMetric.h"
+#include "monitor.hpp"
+#include "metric.hpp"
 #include <iostream>
 #include <sstream>
 #include "rapidjson/document.h"
@@ -16,9 +16,9 @@
 
 using namespace rapidjson;
 
-class DataDogEvent {      
+class event {      
     public:
-        DataDogEvent(Value& jsonData);
+        event(Value& jsonData);
         uint64_t date_happened;
         std::string alert_type;
         bool is_aggregate;          //event has children or not

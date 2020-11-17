@@ -1,19 +1,19 @@
-#include "include/DataDogClient.hpp"
-#include "include/DataDogMonitor.hpp"
-#include "include/DataDogEvent.hpp"
+#include "include/client.hpp"
+#include "include/monitor.hpp"
+#include "include/event.hpp"
 #include <cstdint>
 
 
 using namespace rapidjson;
 
 
-DataDogClient::DataDogClient(const char* ddApiKey,const char* ddAppKey){
+client::client(const char* ddApiKey,const char* ddAppKey){
     //loop = uv_default_loop();
     this->appKey = ddAppKey;
     this->apiKey = ddApiKey;  
 }
 
-void DataDogClient::sendMetricSeries(DataDogMetricSeries series,void(*cb)(bool,cpr::Response)){
+void client::sendMetricSeries(metricSeries series,void(*cb)(bool,cpr::Response)){
     std::string data = series.getJsonStr();
 
     char uri[100] = "/api/v1/series?api_key=";
@@ -38,7 +38,7 @@ void DataDogClient::sendMetricSeries(DataDogMetricSeries series,void(*cb)(bool,c
 
 }
 
-void DataDogClient::getMonitors(void(*cb)(bool,std::vector<DataDogMonitor>,cpr::Response)){
+void client::getMonitors(void(*cb)(bool,std::vector<monitor>,cpr::Response)){
     char uri[100] = "/api/v1/monitor/search";
     
     std::ostringstream dd_url_stream;
@@ -47,7 +47,7 @@ void DataDogClient::getMonitors(void(*cb)(bool,std::vector<DataDogMonitor>,cpr::
 
     auto parseResponse = [&cb](cpr::Response r){
         //std::cout << r.text << std::endl;
-        std::vector<DataDogMonitor> Monitors;
+        std::vector<monitor> Monitors;
         if (r.status_code == 200){
             Document doc;
             doc.Parse(r.text.c_str());
@@ -56,7 +56,7 @@ void DataDogClient::getMonitors(void(*cb)(bool,std::vector<DataDogMonitor>,cpr::
             
             for (SizeType i=0;i<monitorsValue.Size();i++){
                 Value& monitorVal = monitorsValue[i];
-                DataDogMonitor Monitor(monitorVal);
+                monitor Monitor(monitorVal);
                 Monitors.push_back(Monitor);
             } 
             StringBuffer buffer;
@@ -74,7 +74,7 @@ void DataDogClient::getMonitors(void(*cb)(bool,std::vector<DataDogMonitor>,cpr::
         
 }
 
-void DataDogClient::getEvents(uint64_t start_date, uint64_t end_date, void(*cb)(bool,std::vector<DataDogEvent>,cpr::Response)){
+void client::getEvents(uint64_t start_date, uint64_t end_date, void(*cb)(bool,std::vector<event>,cpr::Response)){
     char uri[100] = "/api/v1/events";
     
     std::ostringstream dd_url_stream;
@@ -83,7 +83,7 @@ void DataDogClient::getEvents(uint64_t start_date, uint64_t end_date, void(*cb)(
 
     auto parseResponse = [&cb](cpr::Response r){
         //std::cout << r.text << std::endl;
-        std::vector<DataDogEvent> Events;
+        std::vector<event> Events;
         if (r.status_code == 200){
             Document doc;
             doc.Parse(r.text.c_str());
@@ -93,7 +93,7 @@ void DataDogClient::getEvents(uint64_t start_date, uint64_t end_date, void(*cb)(
             for (SizeType i=0;i<eventsValue.Size();i++){
                 Value& eventVal = eventsValue[i];
                 assert(eventVal.IsObject());
-                DataDogEvent Event(eventVal);
+                event Event(eventVal);
                 Events.push_back(Event);
             } 
             StringBuffer buffer;
@@ -117,7 +117,7 @@ void DataDogClient::getEvents(uint64_t start_date, uint64_t end_date, void(*cb)(
 };
 
 
-void DataDogClient::checkApiKey(){
+void client::checkApiKey(){
     char uri[100] = "/api/v1/validate";
     
     std::ostringstream dd_url_stream;

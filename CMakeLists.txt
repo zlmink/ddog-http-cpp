@@ -13,7 +13,7 @@ include(CPack)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake) # Include Conan-generated file
 conan_basic_setup(TARGETS) # Introduce Conan-generated targets
 
-add_executable(${PROJECT_NAME} main.cpp DataDogMetric.cpp DataDogClient.cpp DataDogMonitor.cpp DataDogEvent.cpp)
+add_executable(${PROJECT_NAME} main.cpp metric.cpp client.cpp monitor.cpp event.cpp)
 target_link_libraries(${PROJECT_NAME} CONAN_PKG::cpr CONAN_PKG::rapidjson )
 install(TARGETS ddog-cpp DESTINATION bin)
 

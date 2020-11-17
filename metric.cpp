@@ -1,4 +1,4 @@
-#include "include/DataDogMetric.h"
+#include "include/metric.hpp"
 // #include "include/rapidjson/document.h"
 // #include "include/rapidjson/writer.h"
 // #include "include/rapidjson/stringbuffer.h"
@@ -8,13 +8,13 @@
 
 // using namespace rapidjson;
 
-DataDogMetric::DataDogMetric(std::string host, std::string name, std::vector<DataDogPoint> points){
+metric::metric(std::string host, std::string name, std::vector<point> points){
     this->name = name;
     this->points = points;
     this->host = host;
 }
 
-DataDogMetric::DataDogMetric(std::string host, std::string name, std::vector<DataDogPoint> points,std::string tags = "",std::string type = ""){
+metric::metric(std::string host, std::string name, std::vector<point> points,std::string tags = "",std::string type = ""){
     this->name = name;
     this->points = points;
     this->host = host;
@@ -22,7 +22,7 @@ DataDogMetric::DataDogMetric(std::string host, std::string name, std::vector<Dat
     this->tags = tags;
 }
 
-Document DataDogMetric::getJsonDocument(){
+Document metric::getJsonDocument(){
     Document d;
     d.SetObject();
     Document::AllocatorType& alloc = d.GetAllocator();
@@ -68,7 +68,7 @@ Document DataDogMetric::getJsonDocument(){
     return d;
 }
 
-std::string DataDogMetric::getJsonStr(std::string host){
+std::string metric::getJsonStr(std::string host){
     
     Document d = this->getJsonDocument();
     // Print the values 

@@ -1,14 +1,14 @@
-#include "include/DataDogEvent.hpp"
+#include "include/event.hpp"
 // #include "rapidjsonData/document.h"
 // #include "rapidjsonData/writer.h"
 // #include "rapidjsonData/stringbuffer.h"
-// #include "DataDogClient.hpp"
+// #include "client.hpp"
 // #include <vector>
 // #include <map>
 // #include <string>
 using namespace rapidjson;
 
-DataDogEvent::DataDogEvent(Value& jsonData){
+event::event(Value& jsonData){
     if (!jsonData["date_happened"].IsNull()){
         this->date_happened = jsonData["date_happened"].GetInt();
     }

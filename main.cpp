@@ -8,8 +8,8 @@
 #include <sstream>
 #include <unistd.h>
 
-// #include "include/DataDogMetric.h"
-#include "include/DataDogClient.hpp"
+// #include "include/metric.hpp"
+#include "include/client.hpp"
 
 //------------------------------------------------------------------------------
 uint64_t timeSinceEpochSec() {
@@ -65,19 +65,19 @@ int main(int argc, char** argv)
     
 
     std::ostringstream bodyTest;
-    DataDogPoint point (timeSinceEpochSec(),"5.465");
-    std::vector<DataDogPoint> points;
-    points.push_back(point);
-    DataDogMetric metric ("myhost","cppTest",points);
-    std::vector<DataDogMetric> metrics;
-    metrics.push_back(metric);
-    DataDogMetricSeries series (metrics);
+    point p (timeSinceEpochSec(),"5.465");
+    std::vector<point> points;
+    points.push_back(p);
+    metric m ("myhost","cppTest",points);
+    std::vector<metric> metrics;
+    metrics.push_back(m);
+    metricSeries series (metrics);
 
-    DataDogClient client(ddApiKey,ddAppKey);
-    auto printMonitors = [](bool success, std::vector<DataDogMonitor> Monitors,cpr::Response r){
+    client client(ddApiKey,ddAppKey);
+    auto printMonitors = [](bool success, std::vector<monitor> Monitors,cpr::Response r){
         std::cout << r.text << std::endl;
     };
-    auto printEvents = [](bool success, std::vector<DataDogEvent> Events,cpr::Response r){
+    auto printEvents = [](bool success, std::vector<event> Events,cpr::Response r){
         //std::cout << r.text << std::endl;
         if (Events.size() > 0){
             std::cout << Events[0].title << std::endl;

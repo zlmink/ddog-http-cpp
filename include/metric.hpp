@@ -9,21 +9,21 @@
 
 using namespace rapidjson;
 
-class DataDogPoint {
+class point {
     public:
     uint64_t epoch;
     std::string value;
-    DataDogPoint(uint64_t epoch, std::string value){
+    point(uint64_t epoch, std::string value){
         this->epoch = epoch;
         this->value = value;
     }
 
 };
 
-class DataDogMetric {
+class metric {
     public:
-        DataDogMetric (std::string host, std::string name, std::vector<DataDogPoint> );
-        DataDogMetric (std::string host, std::string name, std::vector<DataDogPoint>, std::string tags,std::string type);
+        metric (std::string host, std::string name, std::vector<point> );
+        metric (std::string host, std::string name, std::vector<point>, std::string tags,std::string type);
         std::string getJsonStr(std::string host);
         Document getJsonDocument();
     private:
@@ -31,12 +31,12 @@ class DataDogMetric {
         std::string type = "";
         std::string host;
         std::string name;
-        std::vector<DataDogPoint> points;
+        std::vector<point> points;
 };
 
-class DataDogMetricSeries {
+class metricSeries {
     public:
-        DataDogMetricSeries(std::vector<DataDogMetric> metrics){
+        metricSeries(std::vector<metric> metrics){
             this->metrics = metrics;
         }
         std::string getJsonStr(){
@@ -63,5 +63,5 @@ class DataDogMetricSeries {
 
         }
     private:
-        std::vector<DataDogMetric> metrics;
+        std::vector<metric> metrics;
 };

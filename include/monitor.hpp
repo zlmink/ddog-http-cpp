@@ -3,7 +3,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
-//#include "DataDogClient.hpp"
+//#include "client.hpp"
 #include <vector>
 #include <map>
 #include <string>
@@ -22,9 +22,9 @@ struct Notification {
 };
 
 
-class DataDogMonitor {
+class monitor {
     public:
-        DataDogMonitor(Value& monitorJson);
+        monitor(Value& monitorJson);
         std::string status;
         std::vector<std::string> scopes;
         Creator creator;
@@ -43,6 +43,6 @@ class DataDogMonitor {
         
 
     // private:
-    //     DataDogClient * _client;
+    //     client * _client;
 
 };
