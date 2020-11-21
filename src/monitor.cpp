@@ -1,4 +1,4 @@
-#include "include/monitor.hpp"
+#include "ddog_http/monitor.hpp"
 // #include "rapidjson/document.h"
 // #include "rapidjson/writer.h"
 // #include "rapidjson/stringbuffer.h"
@@ -7,6 +7,8 @@
 // #include <map>
 // #include <string>
 using namespace rapidjson;
+
+namespace ddog_http {
 
 monitor::monitor(Value& monitorJson){
     
@@ -42,4 +44,6 @@ monitor::monitor(Value& monitorJson){
     this->org_id = monitorJson["org_id"].GetInt();
     this->type = monitorJson["type"].GetString();
     
+}
+
 }

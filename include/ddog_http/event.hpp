@@ -16,6 +16,8 @@
 
 using namespace rapidjson;
 
+namespace ddog_http {
+
 class event {      
     public:
         event(Value& jsonData);
@@ -35,3 +37,5 @@ class event {
         uint64_t id;
 
 };
+
+}

@@ -10,6 +10,8 @@
 
 using namespace rapidjson;
 
+namespace ddog_http {
+
 struct Creator {
     std::string handle;
     uint64_t id;
@@ -46,3 +48,5 @@ class monitor {
     //     client * _client;
 
 };
+
+}

@@ -1,11 +1,12 @@
-#include "include/client.hpp"
-#include "include/monitor.hpp"
-#include "include/event.hpp"
+#include "ddog_http/client.hpp"
+#include "ddog_http/monitor.hpp"
+#include "ddog_http/event.hpp"
 #include <cstdint>
 
 
 using namespace rapidjson;
 
+namespace ddog_http {
 
 client::client(const char* ddApiKey,const char* ddAppKey){
     //loop = uv_default_loop();
@@ -136,3 +137,4 @@ void client::checkApiKey(){
     auto future_response = cpr::GetCallback(parseResponse,cpr::Url{dd_url},
         cpr::Header{{"DD-API-KEY",this->apiKey}});
 };
+}

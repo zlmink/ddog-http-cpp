@@ -2,7 +2,7 @@
     "configurations": [
       {
         "name": "Mac",
-        "includePath": ["${workspaceFolder}/**","~/.conan/data/**"],
+        "includePath": ["${workspaceFolder}/**","~/.conan/data/**","${workspaceFolder}/build/lib/**"],
         "defines": [],
         "compilerPath": "/usr/bin/clang",
         "cStandard": "c11",

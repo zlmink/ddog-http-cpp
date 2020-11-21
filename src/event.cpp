@@ -1,4 +1,4 @@
-#include "include/event.hpp"
+#include "ddog_http/event.hpp"
 // #include "rapidjsonData/document.h"
 // #include "rapidjsonData/writer.h"
 // #include "rapidjsonData/stringbuffer.h"
@@ -7,6 +7,8 @@
 // #include <map>
 // #include <string>
 using namespace rapidjson;
+
+namespace ddog_http {
 
 event::event(Value& jsonData){
     if (!jsonData["date_happened"].IsNull()){
@@ -57,3 +59,5 @@ event::event(Value& jsonData){
     
 
 };
+
+}

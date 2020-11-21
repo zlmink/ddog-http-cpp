@@ -9,6 +9,8 @@
 
 using namespace rapidjson;
 
+namespace ddog_http {
+
 class point {
     public:
     uint64_t epoch;
@@ -65,3 +67,5 @@ class metricSeries {
     private:
         std::vector<metric> metrics;
 };
+
+}

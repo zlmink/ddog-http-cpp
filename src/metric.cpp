@@ -1,4 +1,4 @@
-#include "include/metric.hpp"
+#include "ddog_http/metric.hpp"
 // #include "include/rapidjson/document.h"
 // #include "include/rapidjson/writer.h"
 // #include "include/rapidjson/stringbuffer.h"
@@ -7,6 +7,8 @@
 // #include <sstream>
 
 // using namespace rapidjson;
+
+namespace ddog_http {
 
 metric::metric(std::string host, std::string name, std::vector<point> points){
     this->name = name;
@@ -81,4 +83,6 @@ std::string metric::getJsonStr(std::string host){
     // std::ostringstream ret;
     // ret << buffer.GetString();
     return std::string (buffer.GetString(), buffer.GetSize());
+}
+
 }

@@ -9,7 +9,10 @@
 #include <unistd.h>
 
 // #include "include/metric.hpp"
-#include "include/client.hpp"
+#include "ddog_http/client.hpp"
+
+//namespace ddog_http = ddog_http;
+//using namespace ddog_http
 
 //------------------------------------------------------------------------------
 uint64_t timeSinceEpochSec() {
@@ -65,19 +68,19 @@ int main(int argc, char** argv)
     
 
     std::ostringstream bodyTest;
-    point p (timeSinceEpochSec(),"5.465");
-    std::vector<point> points;
+    ddog_http::point p (timeSinceEpochSec(),"5.465");
+    std::vector<ddog_http::point> points;
     points.push_back(p);
-    metric m ("myhost","cppTest",points);
-    std::vector<metric> metrics;
+    ddog_http::metric m ("myhost","cppTest",points);
+    std::vector<ddog_http::metric> metrics;
     metrics.push_back(m);
-    metricSeries series (metrics);
+    ddog_http::metricSeries series (metrics);
 
-    client client(ddApiKey,ddAppKey);
-    auto printMonitors = [](bool success, std::vector<monitor> Monitors,cpr::Response r){
+    ddog_http::client client(ddApiKey,ddAppKey);
+    auto printMonitors = [](bool success, std::vector<ddog_http::monitor> Monitors,cpr::Response r){
         std::cout << r.text << std::endl;
     };
-    auto printEvents = [](bool success, std::vector<event> Events,cpr::Response r){
+    auto printEvents = [](bool success, std::vector<ddog_http::event> Events,cpr::Response r){
         //std::cout << r.text << std::endl;
         if (Events.size() > 0){
             std::cout << Events[0].title << std::endl;

@@ -17,6 +17,8 @@
 
 using namespace rapidjson;
 
+namespace ddog_http {
+
 class client {
     private:
       const char * apiKey;
@@ -30,3 +32,5 @@ class client {
         void checkApiKey();
 
 };
+
+}
