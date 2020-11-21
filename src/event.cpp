@@ -1,4 +1,5 @@
 #include "ddog_http/event.hpp"
+#include <stdexcept>
 // #include "rapidjsonData/document.h"
 // #include "rapidjsonData/writer.h"
 // #include "rapidjsonData/stringbuffer.h"
@@ -8,7 +9,25 @@
 // #include <string>
 using namespace rapidjson;
 
+
+
 namespace ddog_http {
+
+
+uint64_t idToUint64(Value& json,std::string key){
+    const char* k = key.c_str();;
+    if (json[k].IsInt()){
+        return json[k].GetInt();
+    }else if (json[k].IsString()){
+        return std::stoul(json[k].GetString());
+    }else {
+        throw std::invalid_argument("Value was not of integer type");
+    }
+}
+
+bool event::hasChildren(){
+    return this->is_aggregate;
+}
 
 event::event(Value& jsonData){
     if (!jsonData["date_happened"].IsNull()){
@@ -18,6 +37,20 @@ event::event(Value& jsonData){
     if (!jsonData["is_aggregate"].IsNull()){
         this->is_aggregate = jsonData["is_aggregate"].GetBool();
     }
+
+    if (this->is_aggregate){
+        Value& childrenVal = jsonData["children"];
+        for (SizeType i = 0;i<childrenVal.Size();i++){
+            Value& childVal = childrenVal[i];
+            child c {
+                .date_happened=idToUint64(childVal,"date_happened"),
+                .alert_type=childVal["alert_type"].GetString(),
+                .id=idToUint64(childVal,"id")
+            };
+            this->children.push_back(c);
+        }
+    }
+
     this->title = jsonData["title"].GetString();
     this->url = jsonData["url"].GetString();
     this->text = jsonData["text"].GetString();

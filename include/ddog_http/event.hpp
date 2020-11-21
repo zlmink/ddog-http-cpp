@@ -18,6 +18,12 @@ using namespace rapidjson;
 
 namespace ddog_http {
 
+struct child {
+    uint64_t date_happened;
+    std::string alert_type;
+    uint64_t id;
+};
+
 class event {      
     public:
         event(Value& jsonData);
@@ -35,6 +41,8 @@ class event {
         std::string host;
         std::string resource;
         uint64_t id;
+        std::vector<child> children;    //children if the event is aggregated
+        bool hasChildren();
 
 };
 
