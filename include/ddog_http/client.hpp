@@ -30,6 +30,7 @@ class client {
         void getMonitors(void(*cb)(bool,std::vector<monitor>,cpr::Response));
         void getEvents(uint64_t start_date, uint64_t end_date,void(*cb)(bool,std::vector<event>,cpr::Response));
         void checkApiKey();
+        void sendEvent(event event,void(*cb)(bool,cpr::Response));
 
 };
 

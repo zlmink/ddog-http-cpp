@@ -29,6 +29,11 @@ bool event::hasChildren(){
     return this->is_aggregate;
 }
 
+event::event(std::string title, std::string text){
+    this->title = title;
+    this->text = text;
+}
+
 event::event(Value& jsonData){
     if (!jsonData["date_happened"].IsNull()){
         this->date_happened = jsonData["date_happened"].GetInt();

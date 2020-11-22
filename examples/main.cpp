@@ -86,11 +86,21 @@ int main(int argc, char** argv)
             std::cout << Events[0].title << std::endl;
         }
     };
+
+    auto printEventRes = [](bool success, cpr::Response r){
+        std::cout << r.text << std::endl;
+    };
     //client.sendMetricSeries(series,printRes);
     client.getMonitors(printMonitors);
     uint64_t now = timeSinceEpochSec();
     uint64_t before = timeSinceEpochSec() - (60 * 60 * 48);
     client.getEvents(before,now,printEvents);
+    ddog_http::event e("Hello World","Testing 123");
+    e.setAlertType("info");
+    e.setPriority("normal");
+    client.sendEvent(e,printEventRes);
+
+
     //client.checkApiKey();
     //system("pause");
 

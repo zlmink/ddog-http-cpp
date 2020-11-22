@@ -39,6 +39,29 @@ void client::sendMetricSeries(metricSeries series,void(*cb)(bool,cpr::Response))
 
 }
 
+//Sends event to datadog
+void client::sendEvent(event event,void(*cb)(bool,cpr::Response)){
+    char uri[100] = "/api/v1/events";
+    
+    std::ostringstream dd_url_stream;
+    dd_url_stream << "https://api.datadoghq.com" << uri;
+    std::string dd_url = dd_url_stream.str();
+
+    auto parseResponse = [&cb](cpr::Response r){
+        if (r.status_code == 202){
+        cb(true,r);
+        }else {
+        cb(false,r);
+        }
+    };
+
+    std::string data = event.getJsonStr();
+
+    auto future_response = cpr::PostCallback(parseResponse,cpr::Url{dd_url},
+        cpr::Header{{"DD-API-KEY",this->apiKey},{"DD-APPLICATION-KEY",this->appKey},{"Content-Type","application/json"}},
+        cpr::Body{data});
+}
+
 void client::getMonitors(void(*cb)(bool,std::vector<monitor>,cpr::Response)){
     char uri[100] = "/api/v1/monitor/search";
     
