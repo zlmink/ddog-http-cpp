@@ -19,4 +19,6 @@ before_install:
 # - mkdir -p $HOME/.cache
 # - touch $HOME/.cache/mydependency.so
 
-script: ./build.sh
+script:
+    - chmod +x build.sh 
+    - ./build.sh
