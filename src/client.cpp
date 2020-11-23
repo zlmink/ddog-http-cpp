@@ -8,13 +8,24 @@ using namespace rapidjson;
 
 namespace ddog_http {
 
-
+/**
+ * @brief Construct a new client::client object
+ * 
+ * @param ddApiKey - Datadog API key 
+ * @param ddAppKey - Datadog Application key
+ */
 client::client(const char* ddApiKey,const char* ddAppKey){
     //loop = uv_default_loop();
     this->appKey = ddAppKey;
     this->apiKey = ddApiKey;  
 }
 
+/**
+ * @brief Send a set of metrics to Datadog
+ * 
+ * @param series - Series of metrics to be sent
+ * @param cb - Callback function to execute when the request is complete
+ */
 void client::sendMetricSeries(metricSeries series,void(*cb)(bool,cpr::Response)){
     std::string data = series.getJsonStr();
 
@@ -40,7 +51,12 @@ void client::sendMetricSeries(metricSeries series,void(*cb)(bool,cpr::Response))
 
 }
 
-//Sends event to datadog
+/**
+ * @brief Send an event to Datadog 
+ * 
+ * @param event Event to send
+ * @param cb Callback function executed when request is complete
+ */
 void client::sendEvent(event event,void(*cb)(bool,cpr::Response)){
     char uri[100] = "/api/v1/events";
     
@@ -63,6 +79,11 @@ void client::sendEvent(event event,void(*cb)(bool,cpr::Response)){
         cpr::Body{data});
 }
 
+/**
+ * @brief Collects all Datadog monitors
+ * 
+ * @param cb Callback function to be executed upon request completion
+ */
 void client::getMonitors(void(*cb)(bool,std::vector<monitor>,cpr::Response)){
     char uri[100] = "/api/v1/monitor/search";
     
@@ -99,6 +120,13 @@ void client::getMonitors(void(*cb)(bool,std::vector<monitor>,cpr::Response)){
         
 }
 
+/**
+ * @brief Get events between two epoch date/times
+ * 
+ * @param start_date Beginning search date in epoch seconds
+ * @param end_date End search date in epoch seconds
+ * @param cb Callback function to be executed upon request completion
+ */
 void client::getEvents(uint64_t start_date, uint64_t end_date, void(*cb)(bool,std::vector<event>,cpr::Response)){
     char uri[100] = "/api/v1/events";
     
@@ -141,7 +169,10 @@ void client::getEvents(uint64_t start_date, uint64_t end_date, void(*cb)(bool,st
        
 };
 
-
+/**
+ * @brief Checks that the api key provided to the client is valid
+ * 
+ */
 void client::checkApiKey(){
     char uri[100] = "/api/v1/validate";
     
