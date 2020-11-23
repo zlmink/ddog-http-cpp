@@ -8,6 +8,7 @@ using namespace rapidjson;
 
 namespace ddog_http {
 
+
 client::client(const char* ddApiKey,const char* ddAppKey){
     //loop = uv_default_loop();
     this->appKey = ddAppKey;
