@@ -26,6 +26,5 @@ install:
 # - touch $HOME/.cache/mydependency.so
 
 script:
-    - cd build && conan install .. --build=missing
     - chmod +x build.sh 
     - ./build.sh
