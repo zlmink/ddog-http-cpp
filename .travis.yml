@@ -13,12 +13,16 @@ before_install:
   - wget https://cmake.org/files/v3.15/cmake-3.15.0-Linux-x86_64.sh
   - chmod +x cmake-3.15.0-Linux-x86_64.sh
   - ./cmake-3.15.0-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license
-#install:
-# (fake) install dependencies (usually involves wget, configure, make, ...)
+
+install:
+  - pip install conan
+  - conan user
+  # (fake) install dependencies (usually involves wget, configure, make, ...)
 # install into cache folder (build binaries+headers only, no sources and do NOT build there)
 # - mkdir -p $HOME/.cache
 # - touch $HOME/.cache/mydependency.so
 
 script:
+    - conan create . user/channel
     - chmod +x build.sh 
     - ./build.sh
