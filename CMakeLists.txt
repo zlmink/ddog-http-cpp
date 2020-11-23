@@ -11,6 +11,7 @@ set(CPPFLAGS,-I/usr/local/opt/openssl/include)
 #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 include(CPack)
+include(GNUInstallDirs)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake) # Include Conan-generated file
 conan_basic_setup(TARGETS) # Introduce Conan-generated targets
