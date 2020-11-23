@@ -18,6 +18,7 @@ before_install:
 
 install:
   - pip install conan
+  - conan user
  
   # (fake) install dependencies (usually involves wget, configure, make, ...)
 # install into cache folder (build binaries+headers only, no sources and do NOT build there)
@@ -26,6 +27,5 @@ install:
 
 script:
     - conan install .
-    - conan create . user/channel
     - chmod +x build.sh 
     - ./build.sh
