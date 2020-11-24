@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-add_library(ddog_http
+add_library(ddog_http SHARED
     client.cpp
     event.cpp
     metric.cpp
